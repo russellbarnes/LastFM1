@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-// Import the Last.Fm SDK
-#import <LastFm/LastFm.h>
+
+#define SESSION_KEY @"is.gangverk.lastfm.example.session"   // Why is this here?
+#define USERNAME_KEY @"is.gangverk.lastfm.example.username"
 
 @interface ViewController : UIViewController
 

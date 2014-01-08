@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+// Import the Last.Fm SDK
+#import <LastFm/LastFm.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

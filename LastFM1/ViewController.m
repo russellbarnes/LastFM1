@@ -103,8 +103,24 @@
     self.resultLabel.hidden = NO;
     
     // Get artist info
-    [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
+    /*[[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
         NSLog(@"result: %@", result);
+        self.resultLabel.font = [self.resultLabel.font fontWithSize:20];
+        self.resultLabel.text = [result description];
+    } failureHandler:^(NSError *error) {
+        NSLog(@"error: %@", error);
+        self.resultLabel.text = @"An error has occurred while retrieving artist info";
+    }];*/
+    
+    // Get event info
+    [[LastFm sharedInstance] getEventsForLocation:@"Portland" successHandler:^(NSArray *result) {
+        //NSLog(@"result: %@", result);
+        
+        NSNumber *latitude = [[result objectAtIndex:0] objectForKey:@"latitude"];
+        NSNumber *longitude = [[result objectAtIndex:0] objectForKey:@"longitude"];
+        NSLog(@"Latitude:%f",[latitude floatValue]);
+        NSLog(@"Longitude:%f",[longitude floatValue]);
+        
         self.resultLabel.font = [self.resultLabel.font fontWithSize:20];
         self.resultLabel.text = [result description];
     } failureHandler:^(NSError *error) {

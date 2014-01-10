@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#define SESSION_KEY @"is.gangverk.lastfm.example.session"   // Why is this here?
-#define USERNAME_KEY @"is.gangverk.lastfm.example.username"
+#define SESSION_KEY @"saved.session.key"   // Why is this here?
+#define USERNAME_KEY @"saved.username.key"
 
 @interface ViewController : UIViewController
 

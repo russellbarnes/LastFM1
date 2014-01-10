@@ -18,8 +18,9 @@
     // Setup the Last.fm SDK
     [LastFm sharedInstance].apiKey = @"1d6d5daed76871423282ae0e522f1d9e";
     [LastFm sharedInstance].apiSecret = @"14488205c2bc7da2c0893918dd9e87fb";
-    [LastFm sharedInstance].session = [[NSUserDefaults standardUserDefaults] stringForKey:SESSION_KEY];
-    [LastFm sharedInstance].username = [[NSUserDefaults standardUserDefaults] stringForKey:USERNAME_KEY];
+    // Session and username are set when user logs in
+    //[LastFm sharedInstance].session = [[NSUserDefaults standardUserDefaults] stringForKey:SESSION_KEY];
+    //[LastFm sharedInstance].username = [[NSUserDefaults standardUserDefaults] stringForKey:USERNAME_KEY];
     //[LastFm sharedInstance].cacheDelegate = self.lastFmCache;
     
     return YES;

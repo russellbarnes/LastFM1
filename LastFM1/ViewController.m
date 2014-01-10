@@ -105,37 +105,13 @@
     // Get artist info
     [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
         NSLog(@"result: %@", result);
+        self.resultLabel.font = [self.resultLabel.font fontWithSize:20];
         self.resultLabel.text = [result description];
     } failureHandler:^(NSError *error) {
         NSLog(@"error: %@", error);
         self.resultLabel.text = @"An error has occurred while retrieving artist info";
     }];
 }
-
-// When login pressed:
-/*
-[[LastFm sharedInstance] getSessionForUser:self.usernameField.text password:self.passwordField.text successHandler:^(NSDictionary *result) {
-    // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
-    [[NSUserDefaults standardUserDefaults] setObject:result[@"key"] forKey:SESSION_KEY];
-    [[NSUserDefaults standardUserDefaults] setObject:result[@"name"] forKey:USERNAME_KEY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    // Also set the session of the LastFm object
-    [LastFm sharedInstance].session = result[@"key"];
-    [LastFm sharedInstance].username = result[@"name"];
-    
-    // Dismiss the keyboard
-    [self.usernameField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
-    
-    // Show the logout button
-    [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", result[@"name"]]];
-    [self.loginButton setAction:@selector(logout)];
-    self.loginFormView.hidden = YES;
-} failureHandler:^(NSError *error) {
-    NSLog(@"Failure: %@", [error localizedDescription]);
-}];
-*/
 
 - (void)didReceiveMemoryWarning
 {

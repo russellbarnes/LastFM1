@@ -9,6 +9,8 @@
 #import "ViewController.h"
 // Import the Last.Fm SDK
 #import <LastFm/LastFm.h>
+// Import the map view
+#import "MapViewController.h"
 
 @interface ViewController ()
 
@@ -24,6 +26,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *passwordLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendRequestButton;
+
+// Button that switches to map
+@property (weak, nonatomic) IBOutlet UIButton *mapButton;
+
+// Values for lat & long of event.  Must be strong to pass to MapViewController
+@property (strong, nonatomic) NSNumber *latitude;
+@property (strong, nonatomic) NSNumber *longitude;
 
 @end
 
@@ -116,17 +125,32 @@
     [[LastFm sharedInstance] getEventsForLocation:@"Portland" successHandler:^(NSArray *result) {
         //NSLog(@"result: %@", result);
         
-        NSNumber *latitude = [[result objectAtIndex:0] objectForKey:@"latitude"];
-        NSNumber *longitude = [[result objectAtIndex:0] objectForKey:@"longitude"];
-        NSLog(@"Latitude:%f",[latitude floatValue]);
-        NSLog(@"Longitude:%f",[longitude floatValue]);
+        self.latitude = [[result objectAtIndex:0] objectForKey:@"latitude"];
+        self.longitude = [[result objectAtIndex:0] objectForKey:@"longitude"];
+        NSLog(@"Latitude:%f",[self.latitude floatValue]);
+        NSLog(@"Longitude:%f",[self.longitude floatValue]);
         
         self.resultLabel.font = [self.resultLabel.font fontWithSize:20];
         self.resultLabel.text = [result description];
+        
+        // Give user the option of viewing the coordinates on a map
+        self.mapButton.hidden = NO;
+        
     } failureHandler:^(NSError *error) {
         NSLog(@"error: %@", error);
         self.resultLabel.text = @"An error has occurred while retrieving artist info";
     }];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //if ([segue.identifier isEqualToString:@"switchToMap"]) {
+        // Refer to instance of MapViewController
+        MapViewController *newView = segue.destinationViewController;
+        // Assign it the lat & long of the event
+        newView.latitude = self.latitude;
+        newView.longitude = self.longitude;
+    //}
 }
 
 - (void)didReceiveMemoryWarning

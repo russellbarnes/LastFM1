@@ -25,6 +25,7 @@
 		46503B36187FE947008C7D48 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46503B35187FE947008C7D48 /* MapViewController.m */; };
 		46503B38187FEC34008C7D48 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46503B37187FEC34008C7D48 /* MapKit.framework */; };
 		46503B3A18809545008C7D48 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46503B3918809545008C7D48 /* CoreLocation.framework */; };
+		46503B4018823D6C008C7D48 /* EventClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 46503B3F18823D6C008C7D48 /* EventClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		46503B35187FE947008C7D48 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		46503B37187FEC34008C7D48 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		46503B3918809545008C7D48 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		46503B3E18823D6C008C7D48 /* EventClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventClass.h; sourceTree = "<group>"; };
+		46503B3F18823D6C008C7D48 /* EventClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventClass.m; sourceTree = "<group>"; };
 		A3CA845A074B4AD2A6FBB5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F15C13680DED4359A2E2B7F8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +137,8 @@
 				464CE843187D2B9100041631 /* Main.storyboard */,
 				46503B34187FE947008C7D48 /* MapViewController.h */,
 				46503B35187FE947008C7D48 /* MapViewController.m */,
+				46503B3E18823D6C008C7D48 /* EventClass.h */,
+				46503B3F18823D6C008C7D48 /* EventClass.m */,
 				464CE846187D2B9100041631 /* ViewController.h */,
 				464CE847187D2B9100041631 /* ViewController.m */,
 				464CE849187D2B9100041631 /* Images.xcassets */,
@@ -305,6 +310,7 @@
 			files = (
 				464CE848187D2B9100041631 /* ViewController.m in Sources */,
 				464CE842187D2B9100041631 /* AppDelegate.m in Sources */,
+				46503B4018823D6C008C7D48 /* EventClass.m in Sources */,
 				464CE83E187D2B9100041631 /* main.m in Sources */,
 				46503B36187FE947008C7D48 /* MapViewController.m in Sources */,
 			);

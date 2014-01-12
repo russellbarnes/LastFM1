@@ -30,11 +30,10 @@
 // Button that switches to map
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;
 
-// Values for lat & long of event.  Must be strong to pass to MapViewController
-@property (strong, nonatomic) NSNumber *latitude;
-@property (strong, nonatomic) NSNumber *longitude;
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *venue;
+// Array for objects containing values for lat & long of event.
+// Must be strong to pass to MapViewController
+@property (strong, nonatomic) NSArray *eventArray;
+@property (strong, nonatomic) NSMutableArray *eventMutableArray;   // Local use only
 
 @end
 
@@ -43,7 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Additional items here
+    // Initialize data
+    self.eventMutableArray = [[NSMutableArray alloc] init];
 }
 
 - (IBAction)userAccountButtonPressed:(id)sender {
@@ -113,9 +113,9 @@
     // Show the result text box
     self.resultLabel.hidden = NO;
     
+    
     // Get artist info
     /*[[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
-        NSLog(@"result: %@", result);
         self.resultLabel.font = [self.resultLabel.font fontWithSize:20];
         self.resultLabel.text = [result description];
     } failureHandler:^(NSError *error) {
@@ -123,17 +123,28 @@
         self.resultLabel.text = @"An error has occurred while retrieving artist info";
     }];*/
     
+    
     // Get event info
     [[LastFm sharedInstance] getEventsForLocation:@"Portland" successHandler:^(NSArray *result) {
         //NSLog(@"result: %@", result);
         
-        self.latitude = [[result objectAtIndex:0] objectForKey:@"latitude"];
-        self.longitude = [[result objectAtIndex:0] objectForKey:@"longitude"];
-        self.title = [[result objectAtIndex:0] objectForKey:@"title"];
-        self.venue = [[result objectAtIndex:0] objectForKey:@"venue"];
-        NSLog(@"Latitude:%f",[self.latitude floatValue]);
-        NSLog(@"Longitude:%f",[self.longitude floatValue]);
+        // Create array of EventClass objects for the events
+        EventClass *tempEvent;
+        for (int i = 0; i < [result count]; i++) {
+            
+            tempEvent = [[EventClass alloc] init];
+            
+            tempEvent.latitude = [[result objectAtIndex:i] objectForKey:@"latitude"];
+            tempEvent.longitude = [[result objectAtIndex:i] objectForKey:@"longitude"];
+            tempEvent.title = [[result objectAtIndex:i] objectForKey:@"title"];
+            tempEvent.venue = [[result objectAtIndex:i] objectForKey:@"venue"];
+            
+            [self.eventMutableArray addObject:tempEvent];
+        }
         
+        self.eventArray = [NSArray arrayWithArray:self.eventMutableArray];
+        
+        // Display raw result in app
         self.resultLabel.font = [self.resultLabel.font fontWithSize:20];
         self.resultLabel.text = [result description];
         
@@ -141,23 +152,22 @@
         self.mapButton.hidden = NO;
         
     } failureHandler:^(NSError *error) {
+        
         NSLog(@"error: %@", error);
-        self.resultLabel.text = @"An error has occurred while retrieving artist info";
-    }];
+        self.resultLabel.text = @"An error has occurred while retrieving event info";
+        
+    }]; // getEventsForLocation
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"switchToMap"]) {
+        
         // Refer to instance of MapViewController
         MapViewController *newView = segue.destinationViewController;
         
-        // Assign it the lat & long of the event
-        newView.latitude = self.latitude;
-        newView.longitude = self.longitude;
-        // Assign title and venue for the annotation
-        newView.title = [NSString stringWithString:self.title];
-        newView.venue = [NSString stringWithString:self.venue];
+        // Pass the map view the array of events
+        newView.eventArray = self.eventArray;
     }
 }
 

@@ -31,31 +31,37 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // Zoom to the location of the Last.FM event found in ViewController
+    // Mark all events found from Last.FM
+    
     CLLocationCoordinate2D eventLocation;
-    eventLocation.latitude = [self.latitude floatValue];
-    eventLocation.longitude = [self.longitude floatValue];
     
-    // The window to display around the event
-    MKCoordinateRegion windowRegion = MKCoordinateRegionMakeWithDistance(eventLocation, 800, 800);
-    
-    [_mapView setRegion:windowRegion animated:YES];
-    
-    NSLog(@"%f", [self.latitude floatValue]);
-    
-    // Display a point where the cooridnates are
-    self.point = [[MKPointAnnotation alloc] init];
-    [self.point setCoordinate:(CLLocationCoordinate2D)CLLocationCoordinate2DMake([self.latitude floatValue], [self.longitude floatValue])];
-    // Add title
-    [self.point setTitle:self.title];
-    [self.point setSubtitle:self.venue];
+    // Draw all points in array
+    for (int i = 0; i < [self.eventArray count]; i++)
+    {
+        eventLocation.latitude = [[(EventClass *)[self.eventArray objectAtIndex:i] latitude] floatValue];
+        eventLocation.longitude = [[(EventClass *)[self.eventArray objectAtIndex:i] longitude] floatValue];
+        
+        // Display a point where the cooridnates are
+        self.point = [[MKPointAnnotation alloc] init];
+        [self.point setCoordinate:(CLLocationCoordinate2D)CLLocationCoordinate2DMake(eventLocation.latitude, eventLocation.longitude)];
+
+        // Add title
+        [self.point setTitle:[(EventClass*)[self.eventArray objectAtIndex:i] title]];
+        [self.point setSubtitle:[(EventClass*)[self.eventArray objectAtIndex:i] venue]];
+        
+        // Add the annotation point
+        [self.mapView addAnnotation:self.point];
+    }
     
     // Add an annotation view to the map, and give it the annotation
     // This does not seem to be required!
     //self.annotationView = [[MKAnnotationView alloc] initWithAnnotation:self.point reuseIdentifier:@"eventAnnotationView"];
     
-    // Add the annotation point
-    [self.mapView addAnnotation:self.point];
+    
+    // The window to display around the event
+    MKCoordinateRegion windowRegion = MKCoordinateRegionMakeWithDistance(eventLocation, 800, 800);
+    // Zoom to the location of the Last.FM event found in ViewController
+    [_mapView setRegion:windowRegion animated:YES];
 }
 
 // mapView:viewForAnnotation: provides the view for each annotation.

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventClass.h"
 
 #define SESSION_KEY @"saved.session.key"   // Why is this here?
 #define USERNAME_KEY @"saved.username.key"

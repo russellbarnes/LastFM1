@@ -33,6 +33,8 @@
 // Values for lat & long of event.  Must be strong to pass to MapViewController
 @property (strong, nonatomic) NSNumber *latitude;
 @property (strong, nonatomic) NSNumber *longitude;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *venue;
 
 @end
 
@@ -127,6 +129,8 @@
         
         self.latitude = [[result objectAtIndex:0] objectForKey:@"latitude"];
         self.longitude = [[result objectAtIndex:0] objectForKey:@"longitude"];
+        self.title = [[result objectAtIndex:0] objectForKey:@"title"];
+        self.venue = [[result objectAtIndex:0] objectForKey:@"venue"];
         NSLog(@"Latitude:%f",[self.latitude floatValue]);
         NSLog(@"Longitude:%f",[self.longitude floatValue]);
         
@@ -144,13 +148,17 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //if ([segue.identifier isEqualToString:@"switchToMap"]) {
+    if ([segue.identifier isEqualToString:@"switchToMap"]) {
         // Refer to instance of MapViewController
         MapViewController *newView = segue.destinationViewController;
+        
         // Assign it the lat & long of the event
         newView.latitude = self.latitude;
         newView.longitude = self.longitude;
-    //}
+        // Assign title and venue for the annotation
+        newView.title = [NSString stringWithString:self.title];
+        newView.venue = [NSString stringWithString:self.venue];
+    }
 }
 
 - (void)didReceiveMemoryWarning

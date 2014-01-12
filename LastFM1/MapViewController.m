@@ -42,7 +42,34 @@
     [_mapView setRegion:windowRegion animated:YES];
     
     NSLog(@"%f", [self.latitude floatValue]);
+    
+    // Display a point where the cooridnates are
+    self.point = [[MKPointAnnotation alloc] init];
+    [self.point setCoordinate:(CLLocationCoordinate2D)CLLocationCoordinate2DMake([self.latitude floatValue], [self.longitude floatValue])];
+    // Add title
+    [self.point setTitle:self.title];
+    [self.point setSubtitle:self.venue];
+    
+    // Add an annotation view to the map, and give it the annotation
+    // This does not seem to be required!
+    //self.annotationView = [[MKAnnotationView alloc] initWithAnnotation:self.point reuseIdentifier:@"eventAnnotationView"];
+    
+    // Add the annotation point
+    [self.mapView addAnnotation:self.point];
 }
+
+// mapView:viewForAnnotation: provides the view for each annotation.
+// This method may be called for all or some of the added annotations.
+// For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
+/*- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:NSClassFromString(@"MKUserLocation")])
+        return Nil;
+    
+    // We return the view initialized in viewWillAppear
+    return self.annotationView;
+}*/
+
 
 - (void)didReceiveMemoryWarning
 {
